@@ -26,9 +26,19 @@ const ActivityForm = ({ onActivitiesAdded }) => {
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mb: 4 }}>
     <FormControl fullWidth sx={{ mb: 2 }}>
-  <InputLabel sx={{ color: "white" }}>Activity Type</InputLabel>
+  <InputLabel
+  sx={{
+    color: "white",
+    "&.Mui-focused": {
+      color: "white"
+    }
+  }}
+>
+  Activity Type
+</InputLabel>
 
   <Select
+  label="Activity Type"
     value={activity.type}
     onChange={(e) =>
       setActivity({ ...activity, type: e.target.value })

@@ -1,0 +1,82 @@
+version: "3.8"
+
+services:
+
+  eureka:
+    build: ./eureka
+    ports:
+      - "8761:8761"
+
+  configserver:
+    build: ./configserver
+    ports:
+      - "8888:8888"
+    depends_on:
+      - eureka
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_DB: fitness_user_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  userservice:
+    build: ./userservice
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka
+      - postgres
+
+  activityservice:
+    build: ./activityservice
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka
+      - mongodb
+      - rabbitmq
+
+  aiservice:
+    build: ./aiservice
+    ports:
+      - "8083:8083"
+    depends_on:
+      - eureka
+      - mongodb
+      - rabbitmq
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "8181:8181"
+    depends_on:
+      - userservice
+      - activityservice
+      - aiservice
+
+  frontend:
+    build: ./fitness-app-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - gateway

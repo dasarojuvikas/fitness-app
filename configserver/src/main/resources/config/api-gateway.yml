@@ -1,3 +1,6 @@
+server:
+  port: 8181
+
 spring:
   application:
     name: api-gateway
@@ -10,8 +13,6 @@ spring:
 
   cloud:
     gateway:
-
-      # 🔥 ADD THIS BLOCK
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -42,10 +43,14 @@ spring:
           predicates:
             - Path=/api/recommendations/**
 
-server:
-  port: 8181
-
+# ✅ OUTSIDE spring
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}

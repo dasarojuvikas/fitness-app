@@ -10,6 +10,7 @@ import ActivityDetail from "./components/ActivityDetail";
 import bgImage from "./assets/login-bg.png";
 import actBgImage from "./assets/activity-bg.png";
 import Login from "./components/Login";
+import Register from "./components/Register";
 
 const ActvitiesPage = () => {
   const activityListRef = React.useRef(null);
@@ -172,6 +173,8 @@ const AppContent = () => {
       />
 
       <Route path="/login" element={<Login />} />
+
+      <Route path="/register" element={<Register />} />
 
       <Route
         path="/activities"
