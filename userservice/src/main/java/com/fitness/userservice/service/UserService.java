@@ -5,7 +5,7 @@ import com.fitness.userservice.dto.UserResponse;
 import com.fitness.userservice.model.User;
 import com.fitness.userservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-
+//user service
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
